@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Diep.io WR Sheet</title>
+    <style>
+    :root {
+        --grid-border: #ccc;
+        --header-bg: #e2e2e2;
+        --info-bg: #f3f3f3;
+        --highlight-gold: #ffd966;
+        --highlight-yellow: #ffff00;
+        --ffa-color: #7ce3e1;
+        --tdm-color: #97e462;
+        --tdm4-color: #d6544e;
+        --maze-color: #e2cb61;
+        --diep-bg: #cdcdcd;
+        --diep-grid: #c3c3c3;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        background-color: var(--diep-bg);
+        background-image: 
+            linear-gradient(var(--diep-grid) 1px, transparent 1px),
+            linear-gradient(90deg, var(--diep-grid) 1px, transparent 1px);
+        background-size: 25px 25px;
+        background-attachment: fixed;
+    }
+
+    .header-section h1 {
+        font-size: 1.8rem;
+        margin: 0 0 10px 0;
+        color: #000;
+        text-shadow: 1px 1px 0px #fff;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 20px;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    /* --- TABLE SECTION --- */
+    .table-section {
+        flex: 0 0 auto;
+    }
+
+    table {
+        border-collapse: collapse;
+        border: 1px solid var(--grid-border);
+        background: rgba(255, 255, 255, 0.6) !important;
+        backdrop-filter: blur(2px);
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    }
+
+    thead th {
+        position: sticky;
+        top: 0;
+        background: var(--header-bg);
+        border: 1px solid var(--grid-border);
+        padding: 8px 12px;
+        font-size: 11px;
+        z-index: 10;
+    }
+
+    td {
+        border: 1px solid var(--grid-border);
+        padding: 4px 10px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .tank-name-cell {
+        font-weight: bold;
+        background: rgba(240, 240, 240, 0.8) !important;
+        min-width: 100px;
+    }
+
+    /* --- SIDEBAR (Collapsible) --- */
+    .sidebar {
+        flex: 0 0 400px; 
+        position: sticky;
+        top: 20px;
+        background: rgba(255, 255, 255, 0.6) !important;
+        backdrop-filter: blur(2px);
+        border: 2.5px solid #000;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-header {
+        background: #333/;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        padding: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    summary {
+        padding: 10px;
+        background: #d9d9d9;
+        border-bottom: 1px solid #000;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 13px;
+        list-style: none; /* Hides default arrow in some browsers */
+        outline: none;
+    }
+
+    summary:hover {
+        background: #ccc;
+    }
+
+    summary::before {
+        content: '▶ ';
+        font-size: 10px;
+        margin-right: 5px;
+    }
+
+    details[open] summary::before {
+        content: '▼ ';
+    }
+
+    .sidebar-content {
+        padding: 15px;
+        line-height: 1.5;
+        font-size: 12px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .key-box {
+        border-bottom: 1px solid #000;
+    }
+
+    .key-item {
+        padding: 6px 12px;
+        border-bottom: 1px solid #ccc;
+        font-size: 11px;
+    }
+
+    .search-input {
+        padding: 8px 12px;
+        width: 250px;
+        border: 2px solid #555;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    .gold { background: var(--highlight-gold) !important; }
+    .yellow { background: var(--highlight-yellow) !important; }
+    #ffa {background: var(--ffa-color);}
+    #tdm {background: var(--tdm-color);}
+    #tdm4{background: var(--tdm4-color);}
+    #maze{background: var(--maze-color);}
+</style>
+</head>
+<body>
+
+    <div class="header-section">
+        <h1>Mobile Diep.io WR Sheet</h1>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for a tank..." onkeyup="filterTable()">
+    </div>
+
+    <div class="main-container">
+        <div class="table-section">
+            <table id="recordTable">
+                <thead>
+                    <tr>
+                        <th>Tank</th>
+                        <th id="ffa">FFA</th>
+                        <th id="tdm">2TDM</th>
+                        <th id="tdm4">4TDM</th>
+                        <th id="maze">Maze</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <aside class="sidebar">
+    <div class="sidebar-header">Information & Rules</div>
+    
+    <details open>
+        <summary>General Info</summary>
+        <div class="sidebar-content">
+            - These are the current WR scores during/after the Miniclip era.<br><br>
+            - This is a <b>combined WR sheet</b> including EVERY MODERN version of mobile diep.io.
+        </div>
+    </details>
+
+    <details>
+        <summary>Key / Legend</summary>
+        <div class="key-box">
+            <div class="key-item gold">Highest score achieved after Miniclip.</div>
+            <div class="key-item yellow">Highest score achieved in a given gamemode.</div>
+            <div class="key-item"><span style="color:red">Red</span> = Unavailable direct link for proof.</div>
+            <div class="key-item"><b>Bold</b> = No death screen taken for run</div>
+            <div class="key-item"><u>Underlined</u> = Scores needing evidence.</div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Minimum Submission Requirements</summary>
+        <div class="sidebar-content">
+            <b>FFA/2TDM/4TDM:</b> 500k+<br>
+            <b>Maze:</b> 400k+
+        </div>
+    </details>
+</aside>
+    </div>
+
+<script>
+    // Configuration
+    const PASTEBIN_RAW_URL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://pastebin.com/raw/r3HPCCjN');
+    
+    let recordData = []; // Starts empty, filled by the fetch
+	document.getElementById('tableBody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:black; padding:20px;">The Sheet is now loading...</td></tr>';
+    // Function to render the table rows
+    function renderTable(data) {
+        const body = document.getElementById('tableBody');
+        body.innerHTML = '';
+        data.forEach(item => {
+            const row = `<tr>
+                <td class="tank-name-cell">${item.tank}</td>
+                <td>${item.ffa || ''}</td>
+                <td>${item.tdm2 || ''}</td>
+                <td>${item.tdm4 || ''}</td>
+                <td>${item.maze || ''}</td>
+            </tr>`;
+            body.innerHTML += row;
+        });
+    }
+
+    // Function for the search bar
+    function filterTable() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = recordData.filter(item => item.tank.toLowerCase().includes(input));
+        renderTable(filtered);
+    }
+
+    // The function that gets the data from Pastebin
+    async function fetchData() {
+        try {
+            const response = await fetch(PASTEBIN_RAW_URL);
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            recordData = await response.json();
+            renderTable(recordData);
+            console.log("Data loaded successfully from Pastebin");
+        } catch (error) {
+            console.error("Failed to fetch data:", error);
+            document.getElementById('tableBody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:red; padding:20px;">Error loading data. Please check your Pastebin link or CORS settings.</td></tr>';
+        }
+    }
+
+    // Run the fetch when the page loads
+    fetchData();
+</script>
+
+</body>
+</html>
